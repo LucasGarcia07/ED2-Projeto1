@@ -10,13 +10,9 @@ struct cliente{
     char dataNascimento[20];
 };typedef struct cliente Cliente;
 
-
-
-
-
-
-
-
-
+Cliente *criaCliente(int cod, char *nome, char *dataNascimento);
+void salva(Cliente *clt, FILE *out);
+Cliente *le(FILE *in);
+int tamanho();
 
 #endif
