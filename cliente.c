@@ -1,54 +1,63 @@
-#include"cliente.h"
-#include <string.h>
 #include <stdlib.h>
-#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
+#include "cliente.h"
 
-//Imprime cliente
-void imprime(Cliente *clt){
-    printf("**********************************************");
-    printf("\nCódigo Cliente: ");
-    printf("%d", clt->cod);
-    printf("\nNome Cliente: ");
-    printf("%s", clt->nome);
-    printf("\nData de Nascimento: ");
-    printf("%s", clt->dataNascimento);
-    printf("\n**********************************************");
+void imprime(Cliente *c)
+{
+    printf("***********************\n");
+    printf("Nome do Cliente: ");
+    printf("%s\n", c->nome);
+    printf("Data de Nascimento: ");
+    printf("%s\n", c->dataNascimento);
+    printf("***********************\n");
 }
 
-//Cria cliente
-
-Cliente *criaCliente(int cod, char *nome, char *dataNascimento){
-    
-    Cliente *clt = (Cliente*)malloc(sizeof(Cliente));
-    //inicializa espaço de memória com zeros
-    if(clt) memset(clt, 0, sizeof(Cliente));
-    //copiar valores para os campos de cliente
-    clt->cod = cod;
-    strcpy(clt->nome, nome);
-    strcpy(clt->dataNascimento, dataNascimento);
-    return clt;
-}
-void salva(Cliente *clt, FILE *out){
-
-    fwrite(&clt->cod, sizeof(int), 1, out);
-    fwrite(clt->nome, sizeof(char), sizeof(clt->nome), out);
-    fwrite(clt->data_nascimento, sizeof(char), sizeof(clt->data_nascimento), out);
+Cliente *cliente(int cod, char *nome, char *data)
+{
+    Cliente *novo = (Cliente *)malloc(sizeof(Cliente));
+    novo->codCliente = cod;
+    strcpy(novo->nome, nome);
+    strcpy(novo->dataNascimento, data);
+    return novo;
 }
 
-Cliente *le(FILE *in) {
-    Cliente *clt = (Cliente *) malloc(sizeof(Cliente));
-    if (0 >= fread(&clt->cod, sizeof(int), 1, in)) {
-	free(clt);
-	return NULL;
+void salva(Cliente *c, FILE *out)
+{
+    fwrite(&c->codCliente, sizeof(int), 1, out);
+    fwrite(c->nome, sizeof(char), sizeof(c->nome), out);
+    fwrite(c->dataNascimento, sizeof(char), sizeof(c->dataNascimento), out);
+}
+
+Cliente *le(FILE *in)
+{
+    Cliente *c = (Cliente *)malloc(sizeof(Cliente));
+    if (0 >= fread(&c->codCliente, sizeof(int), 1, in))
+    {
+        free(c);
+        return NULL;
     }
-    fread(clt->nome, sizeof(char), sizeof(clt->nome), in);
-    
-    fread(clt->data_nascimento, sizeof(char), sizeof(clt->data_nascimento), in);
-    return clt;
+    fread(c->nome, sizeof(char), sizeof(c->nome), in);
+    fread(c->dataNascimento, sizeof(char), sizeof(c->dataNascimento), in);
+    return c;
 }
 
-int tamanho() {
-    return sizeof(int)  //cod
-            + sizeof(char) * 50 //nome
-            + sizeof(char) * 11 //data_nascimento
+int tamanho()
+{
+    return sizeof(int)          //cod
+           + sizeof(char) * 50  //nome
+           + sizeof(char) * 20; //data de nascimento
+}
+
+int quantidade(FILE *in)
+{
+    rewind(in);
+    Cliente *c;
+    int cont = 0;
+    while ((c = le(in)) != NULL)
+    {
+        cont++;
+        free(c);
+    }
+    return cont;
 }

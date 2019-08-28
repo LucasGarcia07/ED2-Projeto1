@@ -1,18 +1,25 @@
 #ifndef CLIENTE_H
-#define CLIENTE_H
+#define CLIENTE_H 
 
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-struct cliente{
-    int codCliente;
-    char nome[50];
-    char dataNascimento[20];
-};typedef struct cliente Cliente;
+typedef struct cliente
+{
+	int codCliente;
+	char nome[50], dataNascimento[20];
+} Cliente;
 
-Cliente *criaCliente(int cod, char *nome, char *dataNascimento);
-void salva(Cliente *clt, FILE *out);
+void imprime(Cliente *c);
+
+Cliente *cliente(int cod, char *nome, char *data);
+
+void salva(Cliente *c, FILE *out);
+
 Cliente *le(FILE *in);
+
 int tamanho();
+
+int quantidade(FILE *in);
 
 #endif
