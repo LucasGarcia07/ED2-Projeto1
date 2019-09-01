@@ -1,6 +1,5 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H 
-
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -12,7 +11,7 @@ typedef struct cliente
 
 void imprime(Cliente *c);
 
-Cliente *cliente(int cod, char *nome, char *data);
+Cliente *criaCliente(int cod, char *nome, char *data);
 
 void salva(Cliente *c, FILE *out);
 

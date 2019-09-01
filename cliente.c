@@ -13,7 +13,7 @@ void imprime(Cliente *c)
     printf("***********************\n");
 }
 
-Cliente *cliente(int cod, char *nome, char *data)
+Cliente *criaCliente(int cod, char *nome, char *data)
 {
     Cliente *novo = (Cliente *)malloc(sizeof(Cliente));
     novo->codCliente = cod;
