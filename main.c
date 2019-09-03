@@ -74,18 +74,15 @@ void subSelec(char nome[50],int M){
 }
 
 void imprimePart(char nomepart[10]){
-    printf("problema ini\n");
     printf("%s\n", nomepart);
     FILE *in = fopen(nomepart, "rb");
     rewind(in);
     Cliente *c;
-    printf("mid problem\n");
     while((c = le(in))!= NULL){
         imprime(c);
         free(c);
     }
     fclose(in);
-    printf("problema end\n");
 }
 
 int main(int argc, char const *argv[])
